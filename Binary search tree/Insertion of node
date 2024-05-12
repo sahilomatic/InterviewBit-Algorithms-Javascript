@@ -1,1 +1,40 @@
 
+class Treenode{
+    constructor(val){
+        this.val = val;
+        this.left =  null;
+        this.right = null;
+    }
+
+}
+
+var insertIntoBST = function(root, val) {
+    if(!root){
+        return new Treenode(val);
+    }
+    let node = new Treenode(val);
+    let prev = null;
+    let current = root;
+
+    while(current!=null){
+        prev = current;
+        if(val< current.val){
+            
+            current = current.left
+        }
+        else if(val> current.val){
+            current = current.right;
+        }
+
+    //  ITERAYION WILL MAKE CURRENT NULLL AND prev to required node
+    }
+
+    if(val> prev.val){
+        prev.right = node;
+    }
+    else{
+        prev.left = node;
+    }
+
+return root;
+};
