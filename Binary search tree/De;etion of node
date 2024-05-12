@@ -1,0 +1,86 @@
+class TreeNode {
+    constructor(val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+function deleteNode(root, key) {
+    if (!root) {
+        return null;
+    }
+
+    let parent = null;
+    let current = root;
+    let found = false;
+
+    // Search for the node to delete
+    while (current) {
+        if (key === current.val) {
+            found = true;
+            break;
+        } else if (key < current.val) {
+            parent = current;
+            current = current.left;
+        } else {
+            parent = current;
+            current = current.right;
+        }
+    }
+
+    if (!found) {
+        return root;
+    }
+
+    // Case 1: Node is a leaf
+    if (!current.left && !current.right) {
+        if (!parent) {
+            return null;
+        }
+        if (parent.left === current) {
+            parent.left = null;
+        } else {
+            parent.right = null;
+        }
+    }
+    // Case 2: Node has one child
+    else if (!current.left || !current.right) {
+        let child = current.left ? current.left : current.right;
+        if (!parent) {
+            return child;
+        }
+        if (parent.left === current) {
+            parent.left = child;
+        } else {
+            parent.right = child;
+        }
+    }
+    // Case 3: Node has two children
+    else {
+       // node has 2 child
+
+       // find successor
+       let successor = current.left;
+       let successor_parent = current;
+        // here max of left BST is checked, same can be doen for right
+       while(successor.right){
+        successor_parent = successor;
+        successor = successor.right;
+       }
+
+       //swap successor
+       current.val= successor.val;
+
+       //handle successor children
+       if(successor == successor_parent.left){
+        successor_parent.left = successor.left;
+       }
+
+       else{
+        successor_parent.right = successor.left;
+       }
+    }
+
+    return root;
+}
